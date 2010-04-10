@@ -1,0 +1,16 @@
+<p class="p_nav_lista"><%= link_to "Index", :action => "index" %> => <%= link_to "Testy", :action => "list_exams" %></p>
+
+<table cellpadding="6">
+  <% for exam in @exams do %>
+      <tr>
+        <td><%=h exam.name %></td>
+        <td class="td_act"><%= link_to "Upravit test", {:action => "show_exam", :id => exam} %></td>
+        <td class="td_act"><%= link_to "Smazat test", {:action => "delete_exam", :id => exam} , :confirm => 'Opravdu chcete smazat test "' + exam.name + '"' %></td>
+      </tr>
+    <% end %>
+    <tr>
+      <td colspan="3" class="td_act">
+        <%= link_to "Nový test", :action => "new_exam" %>
+      </td>
+    </tr>
+  </table>

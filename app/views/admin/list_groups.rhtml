@@ -1,0 +1,25 @@
+<p class="p_nav_lista"><%= link_to "Index", :action => "index" %> => <%= link_to "Skupiny", :action => "list_groups" %></p>
+
+<table cellpadding="6">
+  <% @lv1 = Group.my_menu(0.to_s) %>
+  <% for i in @lv1 do %>
+      <% @ch = Group.my_menu(i.id.to_s) %>
+      <tr>
+        <td class="td_group_name_lv<%= i.level %>"><%=h i.name %></td>
+        <td class="td_act"><%= link_to "Upravit skupinu", :action => "show_group", :id => i %></td>
+        <td class="td_act"><%= link_to "Smazat skupinu", {:action => "delete_group", :id => i} , :confirm => 'Opravdu chcete smazat skupinu "' + i.name + '"' %></td>
+      </tr>
+      <% for j in @ch do %>
+          <tr>
+            <td class="td_group_name_lv<%= j.level %>"><%=h j.name %></td>
+            <td class="td_act"><%= link_to "Upravit skupinu", :action => "show_group", :id => j %></td>
+            <td class="td_act"><%= link_to "Smazat skupinu", {:action => "delete_group", :id => j} , :confirm => 'Opravdu chcete smazat skupinu "' + j.name + '"' %></td>
+          </tr>
+        <% end %>
+      <% end %>
+      <tr>
+        <td colspan="3" class="td_act">
+          <%= link_to "Nová skupina", :action => "new_group" %>
+        </td>
+      </tr>
+    </table>

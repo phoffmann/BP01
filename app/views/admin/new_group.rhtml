@@ -1,0 +1,18 @@
+<p class="p_nav_lista"><%= link_to "Index", :action => "index" %> => <%= link_to "Skupiny", :action => "list_groups" %> => Nová skupina</p>
+
+<% form_tag :action => "create_group" do %>
+  <table>
+    <tr>
+      <td class="td_left">Vyberte umístěni skupiny:
+        <select name="group[parent_id]">
+          <option value="0">Root</option>
+          <% for group in @groups do %>
+              <option value="<%= group.id %>"><%= group.name %></option>
+            <% end %>
+          </select>
+        </td>
+        <td colspan="3" class="td_left">Název skupiny: <%= text_field "group", "name" %></td>
+        <td><%= submit_tag "Vytvorit" %></td>
+      </tr>
+    </table>
+  <% end %>

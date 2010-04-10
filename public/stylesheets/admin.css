@@ -1,0 +1,132 @@
+@CHARSET "UTF-8";
+/*
+    Document   : admin
+    Created on : 6.2.2010, 22:25:23
+    Author     : phoffman
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/*
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+root {
+    display: block;
+}
+
+* {margin: 0px; padding: 0px}
+* html #d_body {height: 1%; margin-left: 0;}
+body {background-color: white; font-family: Arial, " Arial CE", sans-serif; font-size: 0.9em; color: black}
+p {text-align: justify; margin-bottom: 1em}
+li {list-style-type: none; font-size: 1.0em}
+ul {list-style-type: none; text-align: left}
+a {text-decoration: none; color: black}
+a:hover {color: red; cursor: pointer}
+table {width:100% ;font-family: Arial, " Arial CE", sans-serif; font-size: 1em; border: none; border-collapse: collapse}
+th {text-align: center}
+td {text-align: center; border: solid blue 1px; padding: 2px; vertical-align: middle;}
+
+#d_up {background-color: #0000CC; margin-top: 0.5em; margin-bottom: 0.5em; padding-bottom: 5px; padding-left: 5px; padding-right: 5px; padding-top: 5px}
+#d_left {float: left; width: 180px; background-color: #C5D4FF; padding-left: 5px; padding-top: 5px; padding-bottom: 5px}
+#d_left a {color: black}
+#d_left a:hover {color: yellow}
+#d_body {background-color: white; margin-left: 190px; margin-bottom: 0.5em; padding: 3px; border-color: silver; border-style: dashed; border-width: 1px; height: 100%}
+#d_main {width: 994px; position: relative; left: 50%; margin-left: -497px}
+#nadpis1 {font-size: 1.5em; text-align: center; font-weight: bold; color: white; margin-bottom: 0px}
+#nadpis1 a {font-size: 1.5em; text-align: center; font-weight: bold; color: white; margin-bottom: 0px}
+#nadpis1 a:hover {color: yellow}
+#nadpis2 {font-size: 0.9em; text-align: center; color: white; margin-bottom: 0px}
+#nadpis3 {font-size: 0.9em; text-align: right; color: white; margin-bottom: 0px}
+#nadpis3 a {color: white}
+#nadpis3 a:hover {color: yellow}
+
+.nadpis1 {font-size: 1.5em; text-align: left; font-weight: bold; color: black; margin-bottom: 1.5em}
+.nadpis2 {font-size: 0.9em; text-align: right; color: red; margin-top: 0.9em}
+.nadpis3 {font-size: 0.9em; text-align: left; font-weight: bold; color: black; margin-bottom: 0.5em}
+.nadpis4 {font-size: 1em; text-align: center; font-weight: bold;}
+.li_lv1 {list-style: none; font-weight: bold; margin-left: 0em}
+.li_lv2 {list-style: none; font-weight: normal; margin-left: 1em}
+.li_lv2 a:hover {color: white}
+.td_main {border: none;}
+.td_main_sign {border: none; font-size: 3em}
+/*.td {text-align: center; border: solid blue 1px; padding: 2px}*/
+.skupina {font-weight: bold;}
+.treeview ul{ /*CSS for Simple Tree Menu*/
+              margin: 0;
+              padding-left: 5px;
+}
+.pr_active {background-color: #9ACC03; color: white; cursor: pointer}
+.t_menu_priklady {width: auto;}
+.t_menu_priklady td {padding: 3px}
+.t_vyhodnoceni {width: auto;font-size: 1em; border: none}
+.t_vyhodnoceni td {border: none; padding: 3px;}
+.t_matice {font-size: 1em; border: none}
+.t_matice td {border: none; padding: 3px}
+.td_zav2 {font-size: 2em;}
+.td_zav3 {font-size: 3em;}
+.td_zav4 {font-size: 4em;}
+.td_zav5 {font-size: 5em;}
+.td_zav6 {font-size: 6em;}
+.td_zav7 {font-size: 7em;}
+.td_op {font-size: 2em;}
+.td_chyba {background-color: red}
+.td_act {font-weight: bold}
+.td_add_to_exam {font-weight: bold; text-align:right}
+.td_act a:hover {color: red}
+.td_body {font-weight: bold; width: 50px; text-align: right;}
+.td_body_celkem {font-weight: bold; text-align: right;}
+.i_chyba {background-color: red}
+.p_nav_lista {font-weight: bold}
+.t_matice input {font-size: 1em}
+.td_task_title{text-align: left; font-weight: bold}
+.td_task_menu{text-align: right; font-weight: bold}
+.td_title{font-weight: bold}
+.td_desc {text-align:left}
+.td_un {background-color: #9ACC03}
+.tr_space {height: 20px}
+.td_mat {text-align: left;}
+.td_task_name {text-align: left;}
+.td_group_name_lv1 {text-align:left; font-weight: bold; padding-left:0px}
+.td_group_name_lv2 {text-align:left; padding-left:20px}
+.td_left {text-align:left}
+.class_style_td_err {background-color:red}
+.class_n_error {color:red}
+.exam_body {font-size: 0.9em}
+
+.d_left{float:left}
+.d_right{float:right}
+
+
+.fieldWithErrors input {background-color: red}
+.fieldWithErrors textarea {background-color: red}
+#errorExplanation {
+    width: 400px;
+    border: 2px solid red;
+    padding: 7px;
+    padding-bottom: 12px;
+    margin-bottom: 20px;
+    background-color: #f0f0f0;
+}
+
+#errorExplanation h2 {
+    text-align: left;
+    font-weight: bold;
+    padding: 5px 5px 5px 15px;
+    font-size: 12px;
+    margin: -7px;
+    background-color: #c00;
+    color: #fff;
+}
+
+#errorExplanation p {
+    color: #333;
+    margin-bottom: 0;
+    padding: 5px;
+}
+
+#errorExplanation ul li {
+    font-size: 12px;
+    list-style: square;
+}

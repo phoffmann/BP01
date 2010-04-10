@@ -1,0 +1,161 @@
+<p class="p_nav_lista"><%= link_to "Index", :action => "index" %> => <%= link_to "Testy", :action => "list_exams" %> => Upravit test</p>
+
+<table>
+  <tr>
+    <td colspan="5">
+      <div class="d_left">
+        <% form_tag :action => "update_exam", :id => @exam do %>
+          <%= text_field "exam", "name" %>
+          <%= submit_tag "Přejmenovat" %>
+        <% end %>
+      </div>
+
+      <div class="d_right">
+        <% form_tag :action => "choose_task", :id => @exam do %>
+          <select name="task_kategory">
+            <% @task_kategories.each do |key, value| %>
+              <option value="<%= key %>"><%= value %></option>
+            <% end %>
+          </select>
+          <%= submit_tag "Přidat úlohu" %>
+        <% end %>
+
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="5">
+      <% form_tag :action => "update_exam", :id => @exam do %>
+        <p class="nadpis3">Popis:</p>
+        <%= text_area "exam", "desc", :rows => "5", :cols => "60" %>
+        <%= submit_tag "Uložit popis" %>
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <td class="td_task_menu" colspan="5">
+      Celkem bodů: <%= @mark_max %>
+    </td>
+  </tr>
+  <% for task in @tasks do %>
+      <tr>
+        <td colspan="5">&nbsp;</td>
+      </tr>
+      <tr>
+        <td class="td_task_title" colspan="5">
+          <div class="d_left">
+            <%= task.name %> => <%= @task_kategories[task.resource_type] %>
+          </div>
+          <div class="d_right">
+            Body: <%= task.mark %>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="td_desc" colspan="5">
+          <p class="nadpis3">Popis:</p><%= task.desc %>
+        </td>
+      </tr>
+      <% if task.resource_type == "M3" %>
+        <tr>
+          <td<% if task.resource.un == "ma"%> class="td_un"<% end %>>
+            &nbsp;
+          </td>
+          <td>&nbsp;</td>
+          <td<% if task.resource.un == "mb"%> class="td_un"<% end %>>
+            &nbsp;
+          </td>
+          <td>&nbsp;</td>
+          <td<% if task.resource.un == "mc"%> class="td_un"<% end %>>
+            &nbsp;
+          </td>
+        </tr>
+        <tr>
+          <td>A</td>
+          <td>&nbsp;</td>
+          <td>B</td>
+          <td>&nbsp;</td>
+          <td>C</td>
+        </tr>
+        <tr>
+          <td><%= task.resource.format_br("ma") %></td>
+          <td>X</td>
+          <td><%= task.resource.format_br("mb") %></td>
+          <td>=</td>
+          <td><%= task.resource.format_br("mc") %></td>
+        </tr>
+      <% end %>
+      <!-- konec M3 -->
+      <% if task.resource_type == "Inv1" %>
+        <tr>
+          <td colspan="2"<% if task.resource.un == "ma"%> class="td_un"<% end %>>
+            &nbsp;
+          </td>
+          <td>&nbsp;</td>
+          <td colspan="2"<% if task.resource.un == "mb"%> class="td_un"<% end %>>
+            &nbsp;
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">A</td>
+          <td>&nbsp;</td>
+          <td colspan="2">A<sup>-1</sup></td>
+        </tr>
+        <tr>
+          <td colspan="2"><%= task.resource.format_br("ma") %></td>
+          <td>&nbsp;</td>
+          <td colspan="2"><%= task.resource.format_br("mb") %></td>
+        </tr>
+      <% end %>
+      <!-- konec INV1 -->
+      <% if task.resource_type == "M2" %>
+        <tr>
+          <td>&nbsp;</td>
+          <td>&nbsp;</td>
+          <td<% if task.resource.un == "ma"%> class="td_un"<% end %>>
+            &nbsp;
+          </td>
+          <td>&nbsp;</td>
+          <td<% if task.resource.un == "mb"%> class="td_un"<% end %>>
+            &nbsp;
+          </td>
+        </tr>
+        <tr>
+          <td>N</td>
+          <td>&nbsp;</td>
+          <td>A</td>
+          <td>&nbsp;</td>
+          <td>B</td>
+        </tr>
+        <tr>
+          <td><%= task.resource.n %></td>
+          <td>X</td>
+          <td><%= task.resource.format_br("ma") %></td>
+          <td>=</td>
+          <td><%= task.resource.format_br("mb") %></td>
+        </tr>
+      <% end %>
+      <!-- konec M2 -->
+      <% if task.resource_type == "M1" %>
+        <tr>
+          <td colspan="3">&nbsp;</td>
+          <td>&nbsp;</td>
+          <td class="td_un">&nbsp;</td>
+        </tr>
+        <tr>
+          <td colspan="3">A</td>
+          <td>=</td>
+          <td>H</td>
+        </tr>
+        <tr>
+          <td colspan="3"><%= task.resource.format_br("ma") %></td>
+          <td>=</td>
+          <td><%= task.resource.n %></td>
+        </tr>
+      <% end %>
+      <!-- konec M1 -->
+      <tr>
+        <td class="td_task_menu" colspan="5"><%= link_to "Editovat úlohu", :action => "edit_task", :id => task %> | <%= link_to "Odebrat úlohu z testu", {:action => "remove_task_from_exam", :id => @exam.id, :task_id => task.id} , :confirm => 'Opravdu chcete odebrat úlohu "' + task.name + '" z testu.' %></td>
+      </tr>
+    <% end %>
+  </table>

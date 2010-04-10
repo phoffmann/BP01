@@ -1,0 +1,44 @@
+<p class="p_nav_lista"><%= link_to "Index", :action => "index" %> => <%= link_to "Skupiny", :action => "list_groups" %> => Upravit skupinu</p>
+
+<table>
+  <tr>
+    <td colspan="3" class="td_left">
+      <% form_tag :action => "update_group", :id => @group do  %>
+        <%= text_field "group", "name" %><%= submit_tag "Přejmenovat" %>
+      <% end %>
+    </td>
+  </tr>
+  <% form_tag :action => "add_exam_to_group", :id => @group do  %>
+    <% if @group.level == 2 %>
+      <tr>
+        <td colspan="2" class="td_left">
+          <select name="exam_id">
+            <% @c = 0 %>
+            <% for exam in @exams do %>
+                <% if @exids.index(exam.id) == nil %>
+                  <option value="<%= exam.id  %>"><%= exam.name %></option>
+                  <% @c += 1 %>
+                <% end %>
+              <% end %>
+            </select>
+          </td>
+          <td class="td_left">
+            <% if @c > 0 %>
+              <%= submit_tag "Přidat test" %>
+            <% else %>
+              Nebyly nalezeny žádné testy.
+            <% end %>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="3">&nbsp;</td>
+        </tr>
+      <% end %>
+    <% end %>
+    <% for exam in @group.exams do %>
+        <tr>
+          <td><%= exam.name %></td>
+          <td class="td_task_menu" colspan="5"><%= link_to "Editovat test", :action => "show_exam", :id => exam.id %> | <%= link_to "Odebrat test ze skupiny", {:action => "remove_exam_from_group", :id => @group.id, :exam_id => exam.id} , :confirm => 'Opravdu chcete odebrat ze skupiny test "' + exam.name + '"' %></td>
+        </tr>
+      <% end %>
+    </table>

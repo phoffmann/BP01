@@ -1,0 +1,30 @@
+<p class="p_nav_lista"><%= link_to "Index", :action => "index" %> => <%= link_to "Úlohy", :action => "list_tasks" %></p>
+
+<% form_tag :action => "new_task" do %>
+  <table cellpadding="6">
+    <tr>
+      <td>Popis</td>
+      <td>Typ</td>
+      <td colspan="3">&nbsp;</td>
+    </tr>
+    <% for task in @tasks do %>
+        <tr>
+          <td><%=h task.name %></td>
+          <td><%=h @task_kategories[task.resource_type] %></td>
+          <td class="td_act"><%= link_to "Editovat úlohu", :action => "edit_task", :id => task %></td>
+          <td class="td_act"><%= link_to "Zobrazit úlohu", :action => "show_task", :id => task %></td>
+          <td class="td_act"><%= link_to "Smazat úlohu", {:action => "delete_task", :id => task} , :confirm => 'Opravdu chcete smazat úlohu "' + task.name + '"' %></td>
+        </tr>
+      <% end %>
+      <tr>
+        <td colspan="4">Vyberte typ úlohy:
+          <select name="task_kategory">
+            <% @task_kategories.each do |key, value| %>
+            <option value="<%= key %>"><%= value %></option>
+            <% end %>
+          </select>
+        </td>
+        <td><%= submit_tag "Vytvořit" %></td>
+      </tr>
+    </table>
+  <% end %>

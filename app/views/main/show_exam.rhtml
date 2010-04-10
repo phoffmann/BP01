@@ -1,0 +1,75 @@
+<p class="p_nav_lista"><%= @parent_group.name %> => <%= link_to @group.name, :action => "list_group", :id => @group.id %> => <%= @exam.name %></p>
+
+<p class="nadpis1"><%= @exam.name %></p>
+<table>
+  <tr>
+    <td>Uvod</td>
+    <% for task in @exam.tasks do %>
+        <td><%= task.name  %></td>
+      <% end %>
+      <td><a href="test1_vyhodnoceni.html" title="Vyhodnotit">Vyhodnotit</a></td>
+    </tr>
+  </table>
+  <br>
+  <table>
+    <tr>
+      <td colspan="5" class="td_title">
+        <div class="d_left">
+          <%= @exam.name %>
+        </div>
+        <div class="d_right">
+          Body max.:<%= @mark_max %>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="5">
+        <%= @exam.desc %>
+      </td>
+    </tr>
+    <% for task in @exam.tasks do %>
+        <tr>
+          <td colspan="6">&nbsp;</td>
+        </tr>
+        <tr>
+          <td class="td_task_title" colspan="5">
+            <div class="d_left">
+              Task name: <%= task.name %>
+            </div>
+            <div class="d_right">
+              Body: <%= task.mark %>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td colspan="5">
+            Desc.: <%= task.desc %>
+          </td>
+        </tr>
+        <% if task.resource_type == "M3" %>
+          <% @m3 = task.resource %>
+          <tr>
+            <td>
+              <% if task.resource.un == "ma" %>
+                <textarea rows="10" cols="20" name="m3[ma]"></textarea>
+              <% else %>
+                <%= text_area "m3", "ma", :rows => "10", :cols => "20" %></td>
+              <% end %>
+            <td>X</td>
+            <td>
+              <% if task.resource.un == "mb" %>
+                <textarea rows="10" cols="20" name="m3[ma]"></textarea>
+              <% else %>
+                <%= text_area "m3", "ma", :rows => "10", :cols => "20" %></td>
+              <% end %>
+            <td>=</td>
+            <td>
+              <% if task.resource.un == "mc" %>
+                <textarea rows="10" cols="20" name="m3[ma]"></textarea>
+              <% else %>
+                <%= text_area "m3", "ma", :rows => "10", :cols => "20" %></td>
+              <% end %>
+          </tr>
+        <% end %>
+      <% end %>
+    </table>

@@ -1,0 +1,116 @@
+<p class="p_nav_lista"><%= link_to "Index", :action => "index" %> => <%= link_to "Úlohy", :action => "list_tasks" %> => Zobrazit úlohu</p>
+
+<table>
+  <tr>
+    <td colspan="5">
+      Název: <%= @task.name %>
+      Typ: <%= @task_kategories[@task.resource_type] %>
+      Body: <%= @task.mark %>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="5">Vypočítat</td>
+  </tr>
+  <% if @task.resource_type == "M3" %>
+    <tr>
+      <td<% if @task.resource.un == "ma"%> class="td_un"<% end %>>
+        &nbsp;
+      </td>
+      <td>&nbsp;</td>
+      <td<% if @task.resource.un == "mb"%> class="td_un"<% end %>>
+        &nbsp;
+      </td>
+      <td>&nbsp;</td>
+      <td<% if @task.resource.un == "mc"%> class="td_un"<% end %>>
+        &nbsp;
+      </td>
+    </tr>
+    <tr>
+      <td>A</td>
+      <td>&nbsp;</td>
+      <td>B</td>
+      <td>&nbsp;</td>
+      <td>C</td>
+    </tr>
+    <tr>
+      <td><%= text_area "m3", "ma", :rows => "10", :cols => "28" %></td>
+      <td>X</td>
+      <td><%= text_area "m3", "mb", :rows => "10", :cols => "28" %></td>
+      <td>=</td>
+      <td><%= text_area "m3", "mc", :rows => "10", :cols => "28" %></td>
+    </tr>
+  <% end %>
+  <!-- konec M3 -->
+  <% if @task.resource_type == "Inv1" %>
+    <tr>
+      <td colspan="2"<% if @task.resource.un == "ma"%> class="td_un"<% end %>>
+        &nbsp;
+      </td>
+      <td>&nbsp;</td>
+      <td colspan="2"<% if @task.resource.un == "mb"%> class="td_un"<% end %>>
+        &nbsp;
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">A</td>
+      <td>&nbsp;</td>
+      <td colspan="2">A<sup>-1</sup></td>
+    </tr>
+    <tr>
+      <td colspan="2"><%= text_area "inv1", "ma", :rows => "10", :cols => "28" %></td>
+      <td>&nbsp;</td>
+      <td colspan="2"><%= text_area "inv1", "mb", :rows => "10", :cols => "28" %></td>
+    </tr>
+  <% end %>
+  <!-- konec INV1 -->
+  <% if @task.resource_type == "M2" %>
+    <tr>
+      <td>&nbsp;</td>
+      <td>&nbsp;</td>
+      <td<% if @task.resource.un == "ma"%> class="td_un"<% end %>>
+        &nbsp;
+      </td>
+      <td>&nbsp;</td>
+      <td<% if @task.resource.un == "mb"%> class="td_un"<% end %>>
+        &nbsp;
+      </td>
+    </tr>
+    <tr>
+      <td>N</td>
+      <td>&nbsp;</td>
+      <td>A</td>
+      <td>&nbsp;</td>
+      <td>B</td>
+    </tr>
+    <tr>
+      <td><%= text_field "m2", "n", :size => 3 %></td>
+      <td>X</td>
+      <td><%= text_area "m2", "ma", :rows => "10", :cols => "28" %></td>
+      <td>=</td>
+      <td><%= text_area "m2", "mb", :rows => "10", :cols => "28" %></td>
+    </tr>
+  <% end %>
+  <!-- konec M2 -->
+  <% if @task.resource_type == "M1" %>
+    <tr>
+      <td colspan="3">A</td>
+      <td>=</td>
+      <td>H</td>
+    </tr>
+    <tr>
+      <td colspan="3"><%= text_area "m1", "ma", :rows => "10", :cols => "28" %></td>
+      <td>=</td>
+      <td><%= text_field "m1", "n", :size => 3 %></td>
+    </tr>
+  <% end %>
+  <!-- konec M1 -->
+  <tr>
+    <td colspan="5">
+      <div>Pokyny:</div>
+      <%= @task.desc %>
+    </td>
+  </tr>
+  <tr>
+    <td colspan="5"><%= link_to "Editovat úlohu", :action => "edit_task", :id => @task.id %></td>
+  </tr>
+</table>

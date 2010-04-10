@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title><%= controller.action_name  %></title>
+    <%= stylesheet_link_tag "admin"  %>
+  </head>
+  <body>
+    <div id="d_main">
+      <div id="d_up">
+        <p id="nadpis1"><%= link_to "Testovani znalosti z matematiky", :action => "index" %></p>
+      </div>
+      <div id="d_left">
+        <%= main_tree_menu %>
+      </div>
+      <div id="d_body">
+        <%= @content_for_layout %>
+        <p><%= flash[:notice] %></p>
+        <%= error_messages_for 'test' %>
+      </div>
+    </div>
+  </body>
+</html>

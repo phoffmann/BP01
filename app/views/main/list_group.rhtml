@@ -1,0 +1,6 @@
+<p class="p_nav_lista"><%= @parent_group.name %> => <%= link_to @group.name, :action => "list_group", :id => @group.id %></p>
+
+<% for exam in @group.exams %>
+<div class="nadpis1"><%= link_to exam.name, :action => "exam", :id => exam, :group_id => @group.id, :r => 1 %></div>
+<p><%= exam.desc.gsub(/\r\s/, "<br>")  %></p>
+<% end %>

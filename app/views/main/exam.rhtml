@@ -1,0 +1,466 @@
+<p class="p_nav_lista"><%= @parent_group.name %> => <%= link_to @group.name, :action => "list_group", :id => @group.id %> => <%= @exam.name %> - Body max.:<%= @mark_max %></p>
+
+<p class="nadpis1"><%= @exam.name %></p>
+<table>
+  <tr>
+    <td <% if @task_id == nil %> class="pr_active"<% end %>><%= link_to "Uvod", :action => "exam", :id => @exam.id, :group_id => @group.id %></td>
+    <% p = 1 %>
+    <% for task in @exam.tasks do %>
+        <td<% if @task_id == task.id.to_s %> class="pr_active"<% end %>><%= link_to task.name, :action => "exam", :id => @exam.id, :group_id => @group.id, :task_id => task.id %></td>
+        <% p += 1 %>
+      <% end %>
+      <td<% if @rate %> class="pr_active"<% end %>><%= link_to "Vyhodnotit", {:action => "exam", :id => @exam.id, :group_id => @group.id, :task_id => "c"} , :confirm => 'Opravdu chcete vyhodnotit test?' %>
+      </td>
+    </tr>
+  </table>
+  <br>
+  <table>
+    <% if @task_id == nil && @rate == false %>
+      <tr>
+        <td colspan="5" class="td_title">
+          Pokyny
+        </td>
+      </tr>
+      <tr>
+        <td colspan="5" class="td_left">
+          <%= @exam.desc.gsub(/\r\s/, "<br>") %>
+        </td>
+      </tr>
+    <% end %>
+
+    <% for task in @exam.tasks do %>
+        <% if task.id.to_s == @task_id %>
+          <% form_tag :action => "exam", :id => @exam.id, :group_id => @group.id, :task_id => task.id, :save => 1 do  %>
+            <tr>
+              <td class="td_task_title" colspan="1">
+                <div class="d_left">
+                  Úloha: <%= task.name %>
+                </div>
+                <div class="d_right">
+                  Body: <%= task.mark %>
+                </div>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="1" class="td_title">
+                Pokyny:
+              </td>
+            </tr>
+            <tr>
+              <td colspan="1">
+                <%= task.desc %>
+              </td>
+            </tr>
+            <% if task.resource_type == "M3" %>
+              <% @m3 = task.resource %>
+              <tr>
+                <td class="td_mat">
+                  <table class="t_vyhodnoceni">
+                    <tr>
+                      <td colspan="3">A</td>
+                      <td></td>
+                      <td colspan="3">B</td>
+                      <td></td>
+                      <td colspan="3">C</td>
+                    </tr>
+                    <tr>
+                      <td class="td_zav5">{</td>
+                      <td>
+                        <% if task.resource.un == "ma" %>
+                          <textarea rows="10" cols="30" name="m3[ma]"><% if @task_activity_sess %><%= @task_activity_sess.data %><% elsif @error_message.length > 0 %><%= @s_data %><% end %></textarea>
+                        <% else %>
+                          <%= task.resource.print_as_table("ma", "") %>
+                        <% end %>
+                      </td>
+                      <td class="td_zav5">}</td>
+                      <td class="nadpis4">X</td>
+                      <td class="td_zav5">{</td>
+                      <td>
+                        <% if task.resource.un == "mb" %>
+                          <textarea rows="10" cols="30" name="m3[mb]"><% if @task_activity_sess %><%= @task_activity_sess.data %><% elsif @error_message.length > 0 %><%= @s_data %><% end %></textarea>
+                        <% else %>
+                          <%= task.resource.print_as_table("mb", "") %>
+                        <% end %>
+                      </td>
+                      <td class="td_zav5">}</td>
+                      <td class="nadpis4">=</td>
+                      <td class="td_zav5">{</td>
+                      <td>
+                        <% if task.resource.un == "mc" %>
+                          <textarea rows="10" cols="30" name="m3[mc]"><% if @task_activity_sess %><%= @task_activity_sess.data %><% elsif @error_message.length > 0 %><%= @s_data %><% end %></textarea>
+                        <% else %>
+                          <%= task.resource.print_as_table("mc", "") %>
+                        <% end %>
+                      </td>
+                      <td class="td_zav5">}</td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            <% end %><!-- if task.resource_type == "M3" -->
+            <% if task.resource_type == "Inv1" %>
+              <% @inv1 = task.resource %>
+              <tr>
+                <td class="td_mat">
+                  <table class="t_vyhodnoceni">
+                    <tr>
+                      <td colspan="3">A</td>
+                      <td></td>
+                      <td colspan="3">A<sup>-1</sup></td>
+                    </tr>
+                    <tr>
+                      <td class="td_zav5">{</td>
+                      <td>
+                        <% if task.resource.un == "ma" %>
+                          <textarea rows="10" cols="30" name="inv1[ma]"><% if @task_activity_sess %><%= @task_activity_sess.data %><% elsif @error_message.length > 0 %><%= @s_data %><% end %></textarea>
+                        <% else %>
+                          <%= task.resource.print_as_table("ma", "") %>
+                        <% end %>
+                      </td>
+                      <td class="td_zav5">}</td>
+                      <td>&#32;</td>
+                      <td class="td_zav5">{</td>
+                      <td>
+                        <% if task.resource.un == "mb" %>
+                          <textarea rows="10" cols="30" name="inv1[mb]"><% if @task_activity_sess %><%= @task_activity_sess.data %><% elsif @error_message.length > 0 %><%= @s_data %><% end %></textarea>
+                        <% else %>
+                          <%= task.resource.print_as_table("mb", "") %>
+                        <% end %>
+                      </td>
+                      <td class="td_zav5">}</td>
+                    </tr>
+                  </table>
+                </td>
+              </tr>
+            </tr>
+          <% end %><!-- if task.resource_type == "Inv1" -->
+          <% if task.resource_type == "M2" %>
+            <% @m2 = task.resource %>
+            <tr>
+              <td class="td_mat">
+                <table class="t_vyhodnoceni">
+                  <tr>
+                    <td></td>
+                    <td></td>
+                    <td colspan="3">A</td>
+                    <td></td>
+                    <td colspan="3">B</td>
+                  </tr>
+                  <tr>
+                    <td><%= text_field "m2", "n", :size => 3 %></td>
+                    <td class="nadpis4">X</td>
+                    <td class="td_zav5">{</td>
+                    <td>
+                      <% if task.resource.un == "ma" %>
+                        <textarea rows="10" cols="30" name="m2[ma]"><% if @task_activity_sess %><%= @task_activity_sess.data %><% elsif @error_message.length > 0 %><%= @s_data %><% end %></textarea>
+                      <% else %>
+                        <%= task.resource.print_as_table("ma", "") %>
+                      <% end %>
+                    </td>
+                    <td class="td_zav5">}</td>
+                    <td class="nadpis4">=</td>
+                    <td class="td_zav5">{</td>
+                    <td>
+                      <% if task.resource.un == "mb" %>
+                        <textarea rows="10" cols="30" name="m2[mb]"><% if @task_activity_sess %><%= @task_activity_sess.data %><% elsif @error_message.length > 0 %><%= @s_data %><% end %></textarea>
+                      <% else %>
+                        <%= task.resource.print_as_table("mb", "") %>
+                      <% end %>
+                    </td>
+                    <td class="td_zav5">}</td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+            </tr>
+          <% end %><!-- if task.resource_type == "M2" -->
+          <% if task.resource_type == "M1" %>
+            <% @m1 = task.resource %>
+            <tr>
+              <td class="td_mat">
+                <table class="t_vyhodnoceni">
+                  <tr>
+                    <td colspan="3">A</td>
+                    <td></td>
+                    <td>h(A)</td>
+                  </tr>
+                  <tr>
+                    <td class="td_zav5">{</td>
+                    <td>
+                      <%= task.resource.print_as_table("ma", "") %>
+                    </td>
+                    <td class="td_zav5">}</td>
+                    <td>&#32;</td>
+                    <td><input id="m1_n" name="m1[n]" size="3" type="text" value="<% if @task_activity_sess %><%= @task_activity_sess.data %><% elsif @error_message.length > 0 %><%= @s_data %><% end %>" /></td>
+                  </tr>
+                </table>
+              </td>
+            </tr>
+
+
+          <% end %><!-- if task.resource_type == "M1" -->
+          <% if @task_id != nil %>
+            <tr>
+              <td colspan="1"><%= submit_tag "Uložit úlohu" %></td>
+            </tr>
+          <% end %>
+        <% end %><!-- End of from tag -->
+      <% end %>
+    <% end %><!-- End of for cycle -->
+
+    </table>
+    <div>
+      <table class="t_vyhodnoceni">
+        <% if @rate %>
+          <% p = 1 %>
+          <% 0.upto(@rate_data.length - 1) do |i| %>
+            <tr>
+              <td class="nadpis4">Priklad <%= p %></td>
+              <td class="td_mat">
+                <% task = @rate_data[i][0] %>
+
+                <% if task.resource_type == "M3" then %>
+                  <table class="t_vyhodnoceni">
+                    <tr>
+                      <td colspan="3">A</td>
+                      <td></td>
+                      <td colspan="3">B</td>
+                      <td></td>
+                      <td colspan="3">C</td>
+                    </tr>
+                    <tr>
+                      <td class="td_zav5">{</td>
+                      <td>
+                        <% if task.resource.un == "ma" %>
+                          <% if @rate_data[i][1] != nil %>
+                            <% m_cmp = MaticeComparator.new(@rate_data[i][1].clone, task.resource.ma) %>
+                            <%= m_cmp.print_compared("", "class_style_td_err") %>
+                          <% else %>
+                            Nezodpovězeno.
+                          <% end %>
+                        <% else %>
+                          <%= task.resource.print_as_table("ma", "") %>
+                        <% end %>
+                      </td>
+                      <td class="td_zav5">}</td>
+                      <td class="nadpis4">X</td>
+                      <td class="td_zav5">{</td>
+                      <td>
+                        <% if task.resource.un == "mb" %>
+                          <% if @rate_data[i][1] != nil %>
+                            <% m_cmp = MaticeComparator.new(@rate_data[i][1].clone, task.resource.mb) %>
+                            <%= m_cmp.print_compared("", "class_style_td_err") %>
+                          <% else %>
+                            Nezodpovězeno.
+                          <% end %>
+                        <% else %>
+                          <%= task.resource.print_as_table("mb", "") %>
+                        <% end %>
+                      </td>
+                      <td class="td_zav5">}</td>
+                      <td class="nadpis4">=</td>
+                      <td class="td_zav5">{</td>
+                      <td>
+                        <% if task.resource.un == "mc" %>
+                          <% if @rate_data[i][1] != nil %>
+                            <% m_cmp = MaticeComparator.new(@rate_data[i][1].clone, task.resource.mc) %>
+                            <%= m_cmp.print_compared("", "class_style_td_err") %>
+                          <% else %>
+                            Nezodpovězeno.
+                          <% end %>
+                        <% else %>
+                          <%= task.resource.print_as_table("mc", "") %>
+                        <% end %>
+                      </td>
+                      <td class="td_zav5">}</td>
+                    </tr>
+                  </table>
+                </td>
+                <td class="td_body">
+                  <% if @rate_data[i][1] != nil %>
+                    <% if m_cmp.ok %><%= task.mark %><% @mark_reached += task.mark %><% else %>0<% end %>/<%= task.mark %>
+                  <% else %>
+                    0/<%= task.mark %>
+                  <% end %>
+                </td>
+              </tr>
+
+            <% end %><!-- if task.resource_type == "M3" then -->
+
+            <% if task.resource_type == "M2" then %>
+              <table class="t_vyhodnoceni">
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td colspan="3">A</td>
+                  <td></td>
+                  <td colspan="3">B</td>
+                </tr>
+                <tr>
+                  <td><%= task.resource.n.to_s %></td>
+                  <td class="nadpis4">X</td>
+                  <td class="td_zav5">{</td>
+                  <td>
+                    <% if task.resource.un == "ma" %>
+                      <% if @rate_data[i][1] != nil %>
+                        <% m_cmp = MaticeComparator.new(@rate_data[i][1].clone, task.resource.ma) %>
+                        <%= m_cmp.print_compared("", "class_style_td_err") %>
+                      <% else %>
+                        Nezodpovězeno.
+                      <% end %>
+                    <% else %>
+                      <%= task.resource.print_as_table("ma", "") %>
+                    <% end %>
+                  </td>
+                  <td class="td_zav5">}</td>
+                  <td class="nadpis4">=</td>
+                  <td class="td_zav5">{</td>
+                  <td>
+                    <% if task.resource.un == "mb" %>
+                      <% if @rate_data[i][1] != nil %>
+                        <% m_cmp = MaticeComparator.new(@rate_data[i][1].clone, task.resource.mb) %>
+                        <%= m_cmp.print_compared("", "class_style_td_err") %>
+                      <% else %>
+                        Nezodpovězeno.
+                      <% end %>
+                    <% else %>
+                      <%= task.resource.print_as_table("mb", "") %>
+                    <% end %>
+                  </td>
+                  <td class="td_zav5">}</td>
+                </tr>
+              </table>
+              </td>
+              <td class="td_body">
+                <% if @rate_data[i][1] != nil %>
+                  <% if m_cmp.ok %><%= task.mark %><% @mark_reached += task.mark %><% else %>0<% end %>/<%= task.mark %>
+                <% else %>
+                  0/<%= task.mark %>
+                <% end %>
+              </td>
+              </tr>
+
+            <% end %><!-- if task.resource_type == "M2" then -->
+
+            <% if task.resource_type == "M1" then %>
+              <table class="t_vyhodnoceni">
+                <tr>
+                  <td colspan="3">A</td>
+                  <td></td>
+                  <td>h(A)</td>
+                </tr>
+                <tr>
+                  <td class="td_zav5">{</td>
+                  <td>
+                    <%= task.resource.print_as_table("ma", "") %>
+                  </td>
+                  <td class="td_zav5">}</td>
+                  <td>&#32;</td>
+                  <% if @rate_data[i][1] != nil %>
+
+                    <% s_n = @rate_data[i][1].clone.to_i %>
+                    <% if task.resource.n == s_n %>
+                      <td><%= @rate_data[i][1].to_s %><% @mark_reached += task.mark %></td>
+                    <% else %>
+                      <td class="class_style_td_err"><%= @rate_data[i][1].to_s %></td>
+                    <% end %>
+
+                  <% else %>
+                    <td>Nezodpovězeno.</td>
+                  <% end %>
+                </tr>
+              </table>
+              </td>
+
+              <% if @rate_data[i][1] != nil %>
+
+                <% if task.resource.n == s_n %>
+                  <td class="td_body"><%= task.mark %>/<%= task.mark %></td>
+                <% else %>
+                  <td class="td_body">0/<%= task.mark %></td>
+                <% end %>
+
+              <% else %>
+                <td class="td_body">0/<%= task.mark %></td>
+              <% end %>
+              </tr>
+
+
+
+            <% end %><!-- if task.resource_type == "M1" then -->
+
+            <% if task.resource_type == "Inv1" then %>
+              <table class="t_vyhodnoceni">
+                <tr>
+                  <td colspan="3">A</td>
+                  <td></td>
+                  <td colspan="3">A<sup>-1</sup></td>
+                </tr>
+                <tr>
+                  <td class="td_zav5">{</td>
+                  <td>
+                    <% if task.resource.un == "ma" %>
+                      <% if @rate_data[i][1] != nil %>
+                        <% m_cmp = MaticeComparator.new(@rate_data[i][1].clone, task.resource.ma) %>
+                        <%= m_cmp.print_compared("", "class_style_td_err") %>
+                      <% else %>
+                        Nezodpovězeno.
+                      <% end %>
+                    <% else %>
+                      <%= task.resource.print_as_table("ma", "") %>
+                    <% end %>
+                  </td>
+                  <td class="td_zav5">}</td>
+                  <td>&#32;</td>
+                  <td class="td_zav5">{</td>
+                  <td>
+                    <% if task.resource.un == "mb" %>
+                      <% if @rate_data[i][1] != nil %>
+                        <% m_cmp = MaticeComparator.new(@rate_data[i][1].clone, task.resource.mb) %>
+                        <%= m_cmp.print_compared("", "class_style_td_err") %>
+                      <% else %>
+                        Nezodpovězeno.
+                      <% end %>
+                    <% else %>
+                      <%= task.resource.print_as_table("mb", "") %>
+                    <% end %>
+                  </td>
+                  <td class="td_zav5">}</td>
+                </tr>
+              </table>
+              </td>
+              <td class="td_body">
+                <% if @rate_data[i][1] != nil %>
+                  <% if m_cmp.ok %><%= task.mark %><% @mark_reached += task.mark %><% else %>0<% end %>/<%= task.mark %>
+                <% else %>
+                  0/<%= task.mark %>
+                <% end %>
+              </td>
+              </tr>
+
+            <% end %><!-- if task.resource_type == "Inv1" then -->
+
+            <% p += 1 %>
+          <% end %><!-- 0.upto @rate_data.length -->
+
+        <% end %><!-- if rate -->
+        <tr>
+          <td></td>
+          <td class="td_body_celkem">Celkem bodů: <%= @mark_reached.to_s + "/" + @mark_max.to_s %></td>
+          <td></td>
+        </tr>
+      </table>
+
+
+
+      <% if @error_message.length > 0 then %>
+        <% 0.upto(@error_message.length - 1) do |i| %>
+          <%= @error_message[i] %>
+        <% end %>
+      <% end %>
+      <%=
+      #@task_id
+      #debug @buffer
+      #debug @error_message
+      %>
+    </div>

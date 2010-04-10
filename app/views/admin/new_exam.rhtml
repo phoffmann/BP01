@@ -1,0 +1,22 @@
+<p class="p_nav_lista"><%= link_to "Index", :action => "index" %> => <%= link_to "Testy", :action => "list_exams" %> => Nový test</p>
+
+<% form_tag :action => "create_exam" do %>
+  <table>
+    <tr>
+      <td class="td_task_name">Název testu:<%= text_field "exam", "name" %></td>
+    </tr>
+    <tr>
+      <td>
+        Pokyny:
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <%= text_area "exam", "desc", :rows => "5", :cols => "80" %>
+      </td>
+    </tr>
+    <tr>
+      <td><%= submit_tag "Vytvořit" %></td>
+    </tr>
+  </table>
+<% end %>
